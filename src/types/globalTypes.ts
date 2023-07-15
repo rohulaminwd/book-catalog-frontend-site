@@ -1,4 +1,4 @@
-import { FieldValues } from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form';
 
 export type UserName = {
   firstName: string;
@@ -16,6 +16,11 @@ export interface IUser {
   phoneNumber?: string;
   address?: string;
   imageURL?: string;
+}
+
+export interface ILogin {
+  password: string;
+  email: string;
 }
 
 export interface IUserFrom extends FieldValues {

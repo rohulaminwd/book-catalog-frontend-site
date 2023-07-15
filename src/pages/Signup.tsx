@@ -1,27 +1,33 @@
 
 
-import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import signInBg from "../../assets/images/signIn-bg.jpg";
+import signInBg from "../assets/images/signIn-bg.jpg";
 import {
     AiOutlineArrowLeft,
     AiOutlineArrowRight,
     AiOutlineCodeSandbox,
 } from "react-icons/ai";
+import {
+    GiBookAura
+} from "react-icons/gi";
 import { useEffect, useState } from "react";
 // import { toast } from "react-toastify";
 import { BiHide, BiShow } from "react-icons/bi";
-import registerImg from "../../assets/icons/signup.png";
 import { IUser, IUserFrom } from "@/types/globalTypes";
+import { useCreateUserMutation } from "@/redux/features/products/bookApi";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
     const search = useLocation().search;
-    const [error, setError] = useState();
+    const [error, setError] = useState<string>();
+
     const {
         register,
         formState: { errors },
         handleSubmit,
         control,
+        reset,
     } = useForm();
     const [loading, setLoading] = useState(false);
     const newPass = useWatch({ control, name: "NewPass" });
@@ -58,6 +64,9 @@ const SignUp = () => {
         }
     }, [newPass, oldPass]);
 
+    const [createUser, { isSuccess, isError, isLoading }] =
+        useCreateUserMutation();
+
     const onSubmit: SubmitHandler<IUserFrom> = async (data) => {
         setLoading(true);
         const user: IUser = {
@@ -67,9 +76,26 @@ const SignUp = () => {
             },
             password: data.NewPass,
             email: data.email,
-            address: data.address ? data?.address : "Your Address",
+            address: data.address ? data.address : "Your Address",
         };
 
+        try {
+            const response = await createUser({ data: user });
+            console.log(response, isSuccess, isError, isLoading)
+
+            if (response?.data) {
+                navigate("/login");
+                toast.success('SignUp success. Please login now.');
+                reset();
+            } else if (response?.error) {
+                setError(response?.error?.data?.message);
+            }
+        } catch (error) {
+            setError('An error occurred. Please try again.');
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -85,8 +111,8 @@ const SignUp = () => {
                     data-aos-duration="800"
                 >
                     <div className="text-center">
-                        <div>
-                            <img src={registerImg} className="w-16 mx-auto" alt="" />
+                        <div className="flex items-center justify-center">
+                            <GiBookAura size={60} />
                         </div>
                         <h2 className="text-2xl font-bold text-center">New Account</h2>
                         <h6 className="text-center mb-3 leading-normal font-bold mx-auto sm:w-[80%]">
@@ -148,20 +174,15 @@ const SignUp = () => {
                                             },
                                         })}
                                     />
-                                    {/* {errors.name?.lastName && (
+                                    {errors.lastName && (
                                         <label className="label p-0 pt-1">
-                                            {errors.lastName?.type === "required" && (
-                                                <span className="label-text-alt text-red-500">
-                                                    {errors.lastName.message}
-                                                </span>
-                                            )}
-                                            {errors.lastName?.type === "minLength" && (
+                                            {typeof errors.lastName.message === 'string' && (
                                                 <span className="label-text-alt text-red-500">
                                                     {errors.lastName.message}
                                                 </span>
                                             )}
                                         </label>
-                                    )} */}
+                                    )}
                                 </div>
                             </div>
 
@@ -179,7 +200,7 @@ const SignUp = () => {
                                         {...register("email", {
                                             required: {
                                                 value: true,
-                                                message: "First email is required",
+                                                message: "Email is required",
                                             },
                                         })}
                                     />
@@ -230,20 +251,15 @@ const SignUp = () => {
                                             )}
                                         </div>
                                     </div>
-                                    {/* {errors?.NewPass && (
+                                    {errors.NewPass && (
                                         <label className="label p-0 pt-1">
-                                            {errors.NewPass?.type === "required" && (
-                                                <span className="label-text-alt text-red-500">
-                                                    {errors.NewPass.message}
-                                                </span>
-                                            )}
-                                            {errors.NewPass?.type === "minLength" && (
+                                            {typeof errors.NewPass.message === 'string' && (
                                                 <span className="label-text-alt text-red-500">
                                                     {errors.NewPass.message}
                                                 </span>
                                             )}
                                         </label>
-                                    )} */}
+                                    )}
                                 </div>
 
                                 <div className="form-control w-full">
@@ -280,20 +296,15 @@ const SignUp = () => {
                                             )}
                                         </div>
                                     </div>
-                                    {/* {errors?.OldPass && (
+                                    {errors.OldPass && (
                                         <label className="label p-0 pt-1">
-                                            {errors.OldPass?.type === "required" && (
+                                            {typeof errors.OldPass.message === 'string' && (
                                                 <span className="label-text-alt text-red-500">
                                                     {errors.OldPass.message}
                                                 </span>
                                             )}
-                                            {errors.OldPass?.type === "minLength" && (
-                                                <span className="label-text-alt text-red-500">
-                                                    {errors.OldPass.message}
-                                                </span>
-                                            )}
-                                        // </label>
-                                    )} */}
+                                        </label>
+                                    )}
                                 </div>
                             </div>
 
@@ -318,20 +329,15 @@ const SignUp = () => {
                                         },
                                     })}
                                 />
-                                {/* {errors?.address && (
+                                {errors.address && (
                                     <label className="label p-0 pt-1">
-                                        {errors.address?.type === "required" && (
-                                            <span className="label-text-alt text-red-500">
-                                                {errors.address.message}
-                                            </span>
-                                        )}
-                                        {errors.address?.type === "minLength" && (
+                                        {typeof errors.address.message === 'string' && (
                                             <span className="label-text-alt text-red-500">
                                                 {errors.address.message}
                                             </span>
                                         )}
                                     </label>
-                                )} */}
+                                )}
                             </div>
                             {error && (
                                 <p className="text-red-500 mb-2">
@@ -347,13 +353,6 @@ const SignUp = () => {
                         </form>
 
                         <div className="divider">OR</div>
-                        <div className="flex items-center justify-around">
-                            <div className="border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2">
-                                <p className="flex items-center gap-1">
-                                    <AiOutlineCodeSandbox size={20} />{" "}
-                                </p>
-                            </div>
-                        </div>
                         <div className="flex mt-5 items-center font-bold justify-between">
                             <div>
                                 <Link to="/">
@@ -364,7 +363,7 @@ const SignUp = () => {
                                 </Link>
                             </div>
                             <div>
-                                <Link to="/signIn">
+                                <Link to="/login">
                                     <h6 className="flex items-center gap-1 text-[#13b38f]">
                                         Login <AiOutlineArrowRight />
                                     </h6>

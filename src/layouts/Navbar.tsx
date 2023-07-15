@@ -1,10 +1,5 @@
-import React from "react";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
-import { AiOutlineHome, AiOutlineSetting } from "react-icons/ai";
-import { FaBlogger } from "react-icons/fa";
-import { BiMessageSquareDetail } from "react-icons/bi";
-import logo from "../assets/images/logo1.png";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 // import Loading from "./Loading";
 // import LogOutModule from "../Modale/LogOutModule";
 import { useState } from "react";
@@ -170,7 +165,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <li className="mx-1">
-                        <NavLink className="" to="/login">
+                        <NavLink className="" to="/signup">
                             <div className="sm:flex justify-center sm:items-center">
                                 <span className="ml-1 mt-0 block sm:text-[18px] text-sm">
                                     Login
@@ -184,7 +179,7 @@ const Navbar = () => {
     );
     return (
         <div
-            className={` ${stickyClass} duration-300 z-50 font-bold bg-[#fff] shadow-md rounded-b-lg border-b text-cyan-900 w-full`}
+            className={` ${stickyClass} duration-300 z-50 font-bold pattern-bg shadow-md rounded-b-lg border-b text-cyan-900 w-full`}
         >
             <div className="navbar px-xl max-w-7xl flex items-center justify-between mx-auto">
                 <div className="">
