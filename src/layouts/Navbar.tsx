@@ -1,5 +1,5 @@
 
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { Link, Navigate, NavLink, useLocation, useNavigate } from "react-router-dom";
 // import Loading from "./Loading";
 // import LogOutModule from "../Modale/LogOutModule";
 import { useState } from "react";
@@ -15,6 +15,8 @@ const Navbar = () => {
     const usertoken = localStorage.getItem("accessToken");
     const [logout, setLogout] = useState(null);
     const [stickyClass, setStickyClass] = useState("0");
+    const location = useLocation();
+    const { pathname } = location;
 
     const { data, isLoading, error } = useGetMeQuery(undefined);
     const me = data?.data;
@@ -38,46 +40,24 @@ const Navbar = () => {
     const menuItems = (
         <>
             <li className="mx-1">
-                <NavLink
+                <Link
                     to="/"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-transparent border-b-2 border-primary text-primary px-1 rounded-none mx-1 sm:mx-3"
-                            : "px-1 rounded-none mx-1 sm:mx-3"
-                    }
+                    className={`${pathname === '/' ? "!text-primary !bg-teal-50 border-b border-primary" : "px-1 rounded-none mx-1 sm:mx-3"}`}
                 >
-                    <span className="ml-1 mt-0 sm:block hidden hide-p sm:text-[18px] text-sm">
+                    <span className="ml-1 sm:text-[18px] text-sm">
                         Home
                     </span>
-                </NavLink>
+                </Link>
             </li>
             <li className="mx-1">
-                <NavLink
+                <Link
                     to="/all-books"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-transparent border-b-2 border-primary text-primary px-1 rounded-none mx-1 sm:mx-3"
-                            : "px-1 rounded-none mx-1 sm:mx-3"
-                    }
+                    className={`${pathname === '/all-books' ? "!text-primary border-b border-primary" : "px-1 rounded-none mx-1 sm:mx-3"}`}
                 >
-                    <span className="ml-1 mt-0 sm:block hidden hide-p sm:text-[18px] text-sm">
+                    <span className="ml-1 sm:text-[18px] text-sm">
                         All Books
                     </span>
-                </NavLink>
-            </li>
-            <li className="mx-1">
-                <NavLink
-                    to="/book"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "bg-transparent border-b-2 border-primary text-primary px-1 rounded-none mx-1 sm:mx-3"
-                            : "px-1 rounded-none mx-1 sm:mx-3"
-                    }
-                >
-                    <span className="ml-1 mt-0 sm:block hidden hide-p sm:text-[18px] text-sm">
-                        Blog
-                    </span>
-                </NavLink>
+                </Link>
             </li>
         </>
     );
@@ -107,7 +87,7 @@ const Navbar = () => {
                         </label>
                         <ul
                             tabIndex={0}
-                            className="p-2 py-3 shadow-md border text-cyan-800 bg-[#fafbfbbc] border-[#9dbcd5a1] top-[60px] menu menu-compact dropdown-content bg-base-100 rounded-box w-48"
+                            className="p-2 py-3 z-50 shadow-md border text-cyan-800 bg-[#fafbfbbc] border-[#9dbcd5a1] top-[60px] menu menu-compact dropdown-content bg-base-100 rounded-box w-48"
                         >
                             <div className="text-center border-b-2 border-blue-200 mb-3">
                                 <div className="avatar online">
@@ -126,7 +106,7 @@ const Navbar = () => {
                                     </div>
                                 </div>
                                 <h1 className="text-xl py-1 text-blue-900">
-                                    {/* {me?.name?.firstName} {me?.name?.lastName} */}
+                                    {me?.name?.firstName} {me?.name?.lastName}
                                 </h1>
                             </div>
                             <li className="font-bold">

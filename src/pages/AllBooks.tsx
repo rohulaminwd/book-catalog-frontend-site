@@ -8,11 +8,11 @@ export default function AllBooks() {
     const books: IBook[] = data?.data;
     console.log(data, "books")
     return (
-        <div>
+        <div className="max-w-7xl mx-auto">
             <div>
                 <motion.div
                     layout
-                    className="md:mt-5 md:grid md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-x-5 mt-3"
+                    className="md:mt-5 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3"
                 >
                     <AnimatePresence>
                         {books?.map((i) => (

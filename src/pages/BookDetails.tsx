@@ -13,7 +13,7 @@ export default function BookDetails() {
     console.log(id, singleBook, "okkk")
 
     return (
-        <div>
+        <div className="max-w-7xl mx-auto">
             <div>
                 <BookCard book={singleBook} />
             </div>

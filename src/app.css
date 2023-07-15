@@ -28,7 +28,7 @@
 .sticky-nav {
     position: fixed;
     top: 0; left: 0;
-    background-color: rgba(40, 53, 83, 0.923);
+    background-color: rgba(228, 231, 238, 0.923);
     transition: 0.4s;
 }
 

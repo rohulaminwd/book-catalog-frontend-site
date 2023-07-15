@@ -1,16 +1,27 @@
 import BookCard from "@/components/BookCard";
 import Footer from "@/layouts/Footer";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
+import { useGetMeQuery } from "@/redux/features/users/userApi";
 import { IBook } from "@/types/booksTypes";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 export default function Home() {
-  const { data, isLoading, error } = useGetBooksQuery(undefined);
+  const { data, } = useGetBooksQuery(undefined);
   const books: IBook[] = data?.data;
-  console.log(data, "books")
+  const { data: user, } = useGetMeQuery(undefined);
+  const me = user?.data;
   return (
     <div>
+      <div className="p-4 mt-4 foot-reem rounded-xl max-w-7xl mx-auto pattern-bg">
+        <h3 className="text-2xl font-bold text-purple-700">Book Catalog</h3>
+        <div>
+          {me ?
+            <label htmlFor="add-book" className="btn btn-sm  btn-primary text-md rounded-[20px] text-white">Add New Book</label>
+            : <Link to='signup' className="btn btn-sm  btn-primary text-md rounded-[20px] text-white">Sign up Now</Link>
+          }
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto">
         <motion.div
           layout
@@ -41,7 +52,7 @@ export default function Home() {
           See More Books
         </Link>
       </div>
-      <div className="">
+      <div className="pattern-bg">
         <Footer />
       </div>
     </div>
