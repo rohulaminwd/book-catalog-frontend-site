@@ -13,7 +13,7 @@ export default function PrivateRoute({ children }: IProps) {
 
   if (!usertoken) {
     return (
-      <Navigate to="/signIn" state={{ from: location }} replace></Navigate>
+      <Navigate to="/login" state={{ from: location }} replace></Navigate>
     );
   }
 

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
 import Login from '@/pages/Login';
-import NotFound from '@/pages/NotFound';
+import NotFound from '@/pages/Notfound';
 import Home from '@/pages/Home';
 import Signup from '@/pages/Signup';
 import PrivateRoute from './PrivateRoute';
@@ -19,7 +19,7 @@ const routes = createBrowserRouter([
       },
       {
         path: '/all-books',
-        element: <AllBooks />,
+        element: <PrivateRoute><AllBooks /></PrivateRoute>,
       },
       {
         path: '/book-details/:id',
