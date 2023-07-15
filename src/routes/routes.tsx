@@ -3,11 +3,9 @@ import App from '@/App';
 import Login from '@/pages/Login';
 import NotFound from '@/pages/NotFound';
 import Home from '@/pages/Home';
-import Products from '@/pages/Products';
-import Checkout from '@/pages/Checkout';
 import Signup from '@/pages/Signup';
-import ProductDetails from '@/pages/ProductDetails';
 import PrivateRoute from './PrivateRoute';
+import AllBooks from '@/pages/AllBooks';
 
 const routes = createBrowserRouter([
   {
@@ -20,19 +18,11 @@ const routes = createBrowserRouter([
       },
       {
         path: '/all-books',
-        element: <Products />,
+        element: <AllBooks />,
       },
       {
         path: '/book-details/:id',
-        element: <ProductDetails />,
-      },
-      {
-        path: '/checkout',
-        element: (
-          <PrivateRoute>
-            <Checkout />,
-          </PrivateRoute>
-        ),
+        element: <AllBooks />,
       },
     ],
   },
