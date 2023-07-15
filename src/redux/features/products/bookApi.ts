@@ -5,8 +5,8 @@ const userApi = api.injectEndpoints({
     getProducts: builder.query({
       query: () => '/products',
     }),
-    singleProduct: builder.query({
-      query: (id) => `/product/${id}`,
+    getMe: builder.query({
+      query: () => `/auth/me`,
     }),
     createUser: builder.mutation({
       query: ({ data }) => ({
@@ -33,5 +33,5 @@ export const {
   useGetProductsQuery,
   useCreateUserMutation,
   useLoginMutation,
-  useSingleProductQuery,
+  useGetMeQuery,
 } = userApi;

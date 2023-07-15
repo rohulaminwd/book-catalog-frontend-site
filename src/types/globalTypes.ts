@@ -31,3 +31,12 @@ export interface IUserFrom extends FieldValues {
   address?: string;
   NewPass: string;
 }
+
+export interface IResponseData {
+  response: {
+    data: object;
+    message: string;
+    statusCode: number;
+    success: boolean;
+  };
+}

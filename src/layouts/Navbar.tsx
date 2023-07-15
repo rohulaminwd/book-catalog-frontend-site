@@ -9,12 +9,15 @@ import {
     MdOutlineDashboardCustomize,
     MdOutlineManageAccounts,
 } from "react-icons/md";
+import { useGetMeQuery } from "@/redux/features/products/bookApi";
 
 const Navbar = () => {
     const usertoken = localStorage.getItem("accessToken");
     const [logout, setLogout] = useState(null);
     const [stickyClass, setStickyClass] = useState("0");
-    console.log(stickyClass, "dfjdjfkjf");
+    const { data: me, isLoading, error } = useGetMeQuery(undefined);
+
+    console.log(me, isLoading, error)
 
     function stickNavbar() {
         const windowHeight = window.scrollY;

@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from "react";
 // import { toast } from "react-toastify";
 import { BiHide, BiShow } from "react-icons/bi";
-import { IUser, IUserFrom } from "@/types/globalTypes";
+import { IResponseData, IUser, IUserFrom } from "@/types/globalTypes";
 import { useCreateUserMutation } from "@/redux/features/products/bookApi";
 import { toast } from "react-toastify";
 
@@ -67,7 +67,7 @@ const SignUp = () => {
     const [createUser, { isSuccess, isError, isLoading }] =
         useCreateUserMutation();
 
-    const onSubmit: SubmitHandler<IUserFrom> = async (data) => {
+    const onSubmit: any = async (data: IUserFrom) => {
         setLoading(true);
         const user: IUser = {
             name: {
@@ -80,7 +80,7 @@ const SignUp = () => {
         };
 
         try {
-            const response = await createUser({ data: user });
+            const response: any = await createUser({ data: user });
             console.log(response, isSuccess, isError, isLoading)
 
             if (response?.data) {

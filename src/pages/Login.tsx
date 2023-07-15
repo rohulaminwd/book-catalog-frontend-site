@@ -25,6 +25,7 @@ export default function Login() {
         register,
         formState: { errors },
         handleSubmit,
+        reset,
         control,
     } = useForm();
     const [loading, setLoading] = useState(false);
@@ -65,7 +66,7 @@ export default function Login() {
     const [login, { isSuccess, isError, isLoading }] =
         useLoginMutation();
 
-    const onSubmit: SubmitHandler<IUserFrom> = async (data) => {
+    const onSubmit: any = async (data: IUserFrom) => {
         setLoading(true);
         const user: ILogin = {
             email: data.email,
@@ -73,11 +74,13 @@ export default function Login() {
         };
 
         try {
-            const response = await login({ data: user });
+            const response: any = await login({ data: user });
             console.log(response, isSuccess, isError, isLoading)
 
             if (response?.data) {
                 navigate("/");
+                const accessToken = response?.data?.data?.accessToken;
+                localStorage.setItem("accessToken", accessToken);
                 toast.success('login success');
                 reset();
             } else if (response?.error) {
