@@ -1,7 +1,6 @@
 import BookCard from "@/components/BookCard";
 import Footer from "@/layouts/Footer";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
-import { useGetMeQuery } from "@/redux/features/users/userApi";
 import { IBook } from "@/types/booksTypes";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -9,16 +8,40 @@ import { Link } from "react-router-dom";
 export default function Home() {
   const { data, } = useGetBooksQuery(undefined);
   const books: IBook[] = data?.data;
-  const { data: user, } = useGetMeQuery(undefined);
-  const me = user?.data;
+  const usertoken = localStorage.getItem("accessToken");
   return (
-    <div>
+    <div className="">
       <div className="p-4 mt-4 foot-reem rounded-xl max-w-7xl mx-auto pattern-bg">
-        <h3 className="text-2xl font-bold text-purple-700">Book Catalog</h3>
-        <div>
-          {me ?
-            <label htmlFor="add-book" className="btn btn-sm  btn-primary text-md rounded-[20px] text-white">Add New Book</label>
-            : <Link to='signup' className="btn btn-sm  btn-primary text-md rounded-[20px] text-white">Sign up Now</Link>
+        <div className="flex justify-between">
+          <h3 className="text-2xl font-bold  text-purple-700">Book Catalog</h3>
+          <h1 className="font-bold flex justify-center items-center text-md text-purple-700 w-[100px] h-8 px-1 rounded-full bg-purple-200">Item: {books?.length}</h1>
+        </div>
+        <div className="mt-5">
+          <div className="join w-[100%]">
+            <div>
+              <div>
+                <input className="input w-full input-bordered border-purple-400 join-item" placeholder="Search..." />
+              </div>
+            </div>
+            <select className="select w-full select-bordered border-purple-400 join-item">
+              <option disabled selected>genre</option>
+              <option>publicationDate</option>
+              <option>Drama</option>
+              <option>Action</option>
+            </select>
+            <div className="indicator">
+              <button className="btn bg-purple-700 text-white join-item">Search</button>
+            </div>
+          </div>
+        </div>
+        <div className="mt-5">
+          {usertoken ?
+            <div className="flex justify-end">
+              <label htmlFor="add-book" className="btn btn-wide bg-purple-500 hover:bg-purple-600 border-0 text-lg btn-circle text-white">Add New Book</label>
+            </div>
+            : <div className="flex justify-end">
+              <Link to='signup' className="btn btn-wide btn-circle bg-purple-500 hover:bg-purple-600 border-0 text-lg text-white">Sign up Now</Link>
+            </div>
           }
         </div>
       </div>

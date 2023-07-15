@@ -10,10 +10,11 @@ import {
 } from "react-icons/md";
 import { useGetMeQuery } from "@/redux/features/users/userApi";
 import { FaBookReader } from "react-icons/fa";
+import LogOutModule from "@/components/modul/LogOutModule";
 
 const Navbar = () => {
     const usertoken = localStorage.getItem("accessToken");
-    const [logout, setLogout] = useState(null);
+    const [logout, setLogout] = useState<string | null>(null);
     const [stickyClass, setStickyClass] = useState("0");
     const location = useLocation();
     const { pathname } = location;
@@ -140,7 +141,7 @@ const Navbar = () => {
                                 </div>
                             </li>
                             <label
-                                // onClick={() => setLogout("logout")}
+                                onClick={() => setLogout("logout")}
                                 htmlFor="Logout-modal"
                                 className="px-5 hover:text-accent flex items-center gap-2 cursor-pointer"
                             >
@@ -150,7 +151,7 @@ const Navbar = () => {
                     </div>
                 ) : (
                     <li className="mx-1">
-                        <NavLink className="" to="/signup">
+                        <NavLink className="" to="/login">
                             <div className="sm:flex justify-center sm:items-center">
                                 <span className="ml-1 mt-0 block sm:text-[18px] text-sm">
                                     Login
@@ -177,7 +178,7 @@ const Navbar = () => {
                     <div>{ProfileItems}</div>
                 </div>
             </div>
-            {/* {logout && <LogOutModule logout={logout} setLogout={setLogout} />} */}
+            {logout && <LogOutModule setLogout={setLogout} />}
         </div>
     );
 };
