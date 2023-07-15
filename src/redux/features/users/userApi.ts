@@ -2,9 +2,6 @@ import { api } from '@/redux/api/apiSlice';
 
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getProducts: builder.query({
-      query: () => '/products',
-    }),
     getMe: builder.query({
       query: () => `/auth/me`,
     }),
@@ -22,16 +19,8 @@ const userApi = api.injectEndpoints({
         body: data,
       }),
     }),
-    getComment: builder.query({
-      query: (id) => `/comment/${id}`,
-    }),
   }),
 });
 
-export const {
-  useGetCommentQuery,
-  useGetProductsQuery,
-  useCreateUserMutation,
-  useLoginMutation,
-  useGetMeQuery,
-} = userApi;
+export const { useCreateUserMutation, useLoginMutation, useGetMeQuery } =
+  userApi;

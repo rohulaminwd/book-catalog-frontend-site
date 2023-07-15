@@ -6,16 +6,18 @@ import { useState } from "react";
 import { HiOutlineLogout } from "react-icons/hi";
 import { useEffect } from "react";
 import {
-    MdOutlineDashboardCustomize,
     MdOutlineManageAccounts,
 } from "react-icons/md";
-import { useGetMeQuery } from "@/redux/features/products/bookApi";
+import { useGetMeQuery } from "@/redux/features/users/userApi";
+import { FaBookReader } from "react-icons/fa";
 
 const Navbar = () => {
     const usertoken = localStorage.getItem("accessToken");
     const [logout, setLogout] = useState(null);
     const [stickyClass, setStickyClass] = useState("0");
-    const { data: me, isLoading, error } = useGetMeQuery(undefined);
+
+    const { data, isLoading, error } = useGetMeQuery(undefined);
+    const me = data?.data;
 
     console.log(me, isLoading, error)
 
@@ -90,17 +92,17 @@ const Navbar = () => {
                             className="btn btn-ghost btn-circle online avatar"
                         >
                             <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-1">
-                                {/* {me?.image && <img src={me?.image} alt="profile" />}
-                {!me?.image && (
-                  <div className="w-full">
-                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center ring ring-[#91f2dc] ring-offset-base-100 ring-offset-2">
-                      <h2 className="text-xl uppercase font-bold text-white">
-                        {me?.name?.firstName?.slice(0, 1)}
-                        {me?.name?.lastName?.slice(0, 1)}
-                      </h2>
-                    </div>
-                  </div>
-                )} */}
+                                {me?.image && <img src={me?.image} alt="profile" />}
+                                {!me?.image && (
+                                    <div className="w-full">
+                                        <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center ring ring-[#91f2dc] ring-offset-base-100 ring-offset-2">
+                                            <h2 className="text-xl uppercase font-bold text-white">
+                                                {me?.name?.firstName?.slice(0, 1)}
+                                                {me?.name?.lastName?.slice(0, 1)}
+                                            </h2>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </label>
                         <ul
@@ -110,17 +112,17 @@ const Navbar = () => {
                             <div className="text-center border-b-2 border-blue-200 mb-3">
                                 <div className="avatar online">
                                     <div className="w-14 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                                        {/* { me?.image? <img src={me?.image} alt='profile' /> : <img src={profile} alt='profile' />} */}
-                                        {/* {me && (
-                      <div className="w-full">
-                        <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center ring ring-[#91f2dc] ring-offset-base-100 ring-offset-2">
-                          <h2 className="text-3xl uppercase font-bold text-white">
-                            {me?.name?.firstName?.slice(0, 1)}
-                            {me?.name?.lastName?.slice(0, 1)}
-                          </h2>
-                        </div>
-                      </div>
-                    )} */}
+                                        {/* {me?.image ? <img src={me?.image} alt='profile' /> : <img src={profile} alt='profile' />} */}
+                                        {me && (
+                                            <div className="w-full">
+                                                <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center ring ring-[#91f2dc] ring-offset-base-100 ring-offset-2">
+                                                    <h2 className="text-3xl uppercase font-bold text-white">
+                                                        {me?.name?.firstName?.slice(0, 1)}
+                                                        {me?.name?.lastName?.slice(0, 1)}
+                                                    </h2>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 <h1 className="text-xl py-1 text-blue-900">
@@ -133,7 +135,7 @@ const Navbar = () => {
                                     <h1
                                         className={`origin-left whitespace-nowrap duration-300 font-medium`}
                                     >
-                                        Update Profile
+                                        My books
                                     </h1>
                                 </div>
                             </li>
@@ -153,7 +155,7 @@ const Navbar = () => {
                                     <h1
                                         className={`origin-left whitespace-nowrap duration-300 font-medium`}
                                     >
-                                        Update Profile
+                                        Sittings
                                     </h1>
                                 </div>
                             </li>
@@ -182,12 +184,11 @@ const Navbar = () => {
     );
     return (
         <div
-            className={` ${stickyClass} duration-300 z-50 font-bold pattern-bg shadow-md rounded-b-lg border-b text-cyan-900 w-full`}
+            className={` ${stickyClass} duration-300 z-50 font-bold bg-[#ffffff] shadow-md rounded-b-lg border-b text-cyan-900 w-full`}
         >
             <div className="navbar px-xl max-w-7xl flex items-center justify-between mx-auto">
                 <div className="">
-                    <h1 className='text-xl uppercase font-bold'>Books</h1>
-                    {/* <img src={logo} className="w-[80px]" alt="logo" /> */}
+                    <h1 className='text-xl text-primary uppercase font-bold'><FaBookReader size={40} /></h1>
                 </div>
                 <div className="">
                     <div className="flex">

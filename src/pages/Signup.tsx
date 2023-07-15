@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 // import { toast } from "react-toastify";
 import { BiHide, BiShow } from "react-icons/bi";
 import { IResponseData, IUser, IUserFrom } from "@/types/globalTypes";
-import { useCreateUserMutation } from "@/redux/features/products/bookApi";
+import { useCreateUserMutation } from "@/redux/features/users/userApi";
 import { toast } from "react-toastify";
 
 const SignUp = () => {

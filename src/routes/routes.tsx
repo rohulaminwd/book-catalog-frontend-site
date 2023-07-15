@@ -6,6 +6,7 @@ import Home from '@/pages/Home';
 import Signup from '@/pages/Signup';
 import PrivateRoute from './PrivateRoute';
 import AllBooks from '@/pages/AllBooks';
+import BookDetails from '@/pages/BookDetails';
 
 const routes = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const routes = createBrowserRouter([
       },
       {
         path: '/book-details/:id',
-        element: <AllBooks />,
+        element: <BookDetails />,
       },
     ],
   },

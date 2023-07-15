@@ -3,9 +3,9 @@ import Navbar from './Navbar';
 
 export default function MainLayout() {
     return (
-        <div>
+        <div className='bg-base-200'>
             <Navbar />
-            <div className="pt-16 pattern-bg h-screen">
+            <div className="pt-2">
                 <Outlet />
             </div>
         </div>
