@@ -6,7 +6,7 @@ export type UserName = {
 };
 
 export interface IUser {
-  _id?: number;
+  _id: string;
   name: UserName;
   role?: 'user' | 'admin' | 'subAdmin';
   status?: 'active' | 'inactive' | 'block';

@@ -12,14 +12,16 @@ const AddReview = ({ review, setReview }: any) => {
     const handleReview = async () => {
         const data = {
             rating: rating,
-            review: value
+            review: value,
+            userId: review?.author?.email,
         }
 
         const options = {
             id: review?._id,
-            userId: review?.author?.email,
             data: data,
         };
+
+        console.log(options)
 
         try {
             const response: any = await addReview(options);

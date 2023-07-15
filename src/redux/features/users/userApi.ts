@@ -5,6 +5,9 @@ const userApi = api.injectEndpoints({
     getMe: builder.query({
       query: () => `/auth/me`,
     }),
+    getUsers: builder.query({
+      query: () => `/users/`,
+    }),
     createUser: builder.mutation({
       query: ({ data }) => ({
         url: `/auth/signUp`,
@@ -22,5 +25,9 @@ const userApi = api.injectEndpoints({
   }),
 });
 
-export const { useCreateUserMutation, useLoginMutation, useGetMeQuery } =
-  userApi;
+export const {
+  useCreateUserMutation,
+  useLoginMutation,
+  useGetMeQuery,
+  useGetUsersQuery,
+} = userApi;
