@@ -1,36 +1,53 @@
-import { createBrowserRouter, Navigate, RouteObject } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import App from '@/App';
+import Login from '@/pages/Login';
+import NotFound from '@/pages/NotFound';
 import Home from '@/pages/Home';
+import Products from '@/pages/Products';
+import Checkout from '@/pages/Checkout';
+import Signup from '@/pages/Signup';
+import ProductDetails from '@/pages/ProductDetails';
+import PrivateRoute from './PrivateRoute';
 
-// Example authentication function
-const isAuthenticated = () => {
-  const token = localStorage.getItem('token');
-  return !!token;
-};
-
-
-type CustomRouteObject = RouteObject & { auth?: boolean };
-
-const routes: CustomRouteObject[] = [
+const routes = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: '/all-books',
+        element: <Products />,
+      },
+      {
+        path: '/book-details/:id',
+        element: <ProductDetails />,
+      },
+      {
+        path: '/checkout',
+        element: (
+          <PrivateRoute>
+            <Checkout />,
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/signup',
+    element: <Signup />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+]);
 
-];
-
-// Filter routes based on authentication
-const filteredRoutes = routes.map((route) => {
-  if (route.auth && !isAuthenticated()) {
-    // Redirect unauthenticated user to login page
-    return {
-      ...route,
-      element: <Navigate to="/login" replace />,
-    };
-  }
-  return route;
-});
-
-const BrowserRouter = createBrowserRouter(filteredRoutes);
-
-export default BrowserRouter;
+export default routes;
