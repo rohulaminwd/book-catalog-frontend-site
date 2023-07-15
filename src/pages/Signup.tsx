@@ -1,6 +1,6 @@
 
 
-import { useForm, useWatch } from "react-hook-form";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import signInBg from "../../assets/images/signIn-bg.jpg";
 import {
@@ -8,16 +8,15 @@ import {
     AiOutlineArrowRight,
     AiOutlineCodeSandbox,
 } from "react-icons/ai";
-import "react-phone-input-2/lib/style.css";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { BiHide, BiShow } from "react-icons/bi";
 import registerImg from "../../assets/icons/signup.png";
+import { IUser, IUserFrom } from "@/types/globalTypes";
 
 const SignUp = () => {
     const search = useLocation().search;
     const [error, setError] = useState();
-    const [ph, setPh] = useState();
     const {
         register,
         formState: { errors },
@@ -35,7 +34,7 @@ const SignUp = () => {
     const [oldPassType, setOldPassType] = useState("password");
     const [newPassType, setNewPassType] = useState("password");
 
-    const handleShowPass = (old) => {
+    const handleShowPass = (old: string) => {
         if (old === "oldPass") {
             setshowOldPass(!showOldPass);
             setOldPassType(oldPassType === "password" ? "text" : "password");
@@ -59,43 +58,18 @@ const SignUp = () => {
         }
     }, [newPass, oldPass]);
 
-    console.log(refer);
-    const onSubmit = async (data) => {
+    const onSubmit: SubmitHandler<IUserFrom> = async (data) => {
         setLoading(true);
-        const user = {
+        const user: IUser = {
             name: {
                 firstName: data.firstName,
                 lastName: data.lastName,
             },
             password: data.NewPass,
-            phoneNumber: "+" + ph,
+            email: data.email,
             address: data.address ? data?.address : "Your Address",
-            referCode: refer,
-            myReferralCode:
-                data?.firstName?.slice(0, 1) +
-                data?.lastName?.slice(0, 1) +
-                ph?.slice(4),
         };
 
-        axios
-            .post("/auth/signUp", user)
-            .then((response) => {
-                setLoading(false);
-                const status = response.data;
-                if (status.success === true) {
-                    navigate("/signIn");
-                    toast.success(status.message);
-                }
-                if (status.success === false) {
-                    setError(status.message);
-                }
-                console.log(response, "okk");
-                setLoading(false);
-            })
-            .catch((error) => {
-                // Handle any error that occurred during the request
-                console.error(error);
-            });
     };
 
     return (
@@ -144,12 +118,7 @@ const SignUp = () => {
                                     />
                                     {errors.firstName && (
                                         <label className="label p-0 pt-1">
-                                            {errors.firstName?.type === "required" && (
-                                                <span className="label-text-alt text-red-500">
-                                                    {errors.firstName.message}
-                                                </span>
-                                            )}
-                                            {errors.firstName?.type === "minLength" && (
+                                            {typeof errors.firstName.message === 'string' && (
                                                 <span className="label-text-alt text-red-500">
                                                     {errors.firstName.message}
                                                 </span>
@@ -157,6 +126,7 @@ const SignUp = () => {
                                         </label>
                                     )}
                                 </div>
+
                                 <div className="form-control w-full">
                                     <label className="label">
                                         <span className="label-text text-cyan-900 font-bold">
@@ -178,7 +148,7 @@ const SignUp = () => {
                                             },
                                         })}
                                     />
-                                    {errors.name?.lastName && (
+                                    {/* {errors.name?.lastName && (
                                         <label className="label p-0 pt-1">
                                             {errors.lastName?.type === "required" && (
                                                 <span className="label-text-alt text-red-500">
@@ -191,7 +161,7 @@ const SignUp = () => {
                                                 </span>
                                             )}
                                         </label>
-                                    )}
+                                    )} */}
                                 </div>
                             </div>
 
@@ -199,27 +169,29 @@ const SignUp = () => {
                                 <div className="form-control w-full">
                                     <label className="label">
                                         <span className="label-text text-cyan-900 font-bold">
-                                            Phone Number
+                                            First Name
                                         </span>
                                     </label>
-                                    <div className="text-left">
-                                        <PhoneInput
-                                            inputProps={{
-                                                name: "phone",
-                                                required: true,
-                                                autoFocus: true,
-                                            }}
-                                            inputClass="sm:!py-6 border !border-primary"
-                                            buttonClass="border sm:!py-5 !border-primary"
-                                            containerClass=""
-                                            containerStyle={{ width: "100%" }}
-                                            searchClass="border border-primary"
-                                            inputStyle={{ width: "100%" }}
-                                            country={"bd"}
-                                            value={ph}
-                                            onChange={setPh}
-                                        />
-                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="Enter Your Email"
+                                        className="input input-bordered input-sm sm:input-md input-primary w-full"
+                                        {...register("email", {
+                                            required: {
+                                                value: true,
+                                                message: "First email is required",
+                                            },
+                                        })}
+                                    />
+                                    {errors.email && (
+                                        <label className="label p-0 pt-1">
+                                            {typeof errors.email.message === 'string' && (
+                                                <span className="label-text-alt text-red-500">
+                                                    {errors.email.message}
+                                                </span>
+                                            )}
+                                        </label>
+                                    )}
                                 </div>
                             </div>
 
@@ -258,7 +230,7 @@ const SignUp = () => {
                                             )}
                                         </div>
                                     </div>
-                                    {errors?.NewPass && (
+                                    {/* {errors?.NewPass && (
                                         <label className="label p-0 pt-1">
                                             {errors.NewPass?.type === "required" && (
                                                 <span className="label-text-alt text-red-500">
@@ -271,7 +243,7 @@ const SignUp = () => {
                                                 </span>
                                             )}
                                         </label>
-                                    )}
+                                    )} */}
                                 </div>
 
                                 <div className="form-control w-full">
@@ -308,7 +280,7 @@ const SignUp = () => {
                                             )}
                                         </div>
                                     </div>
-                                    {errors?.OldPass && (
+                                    {/* {errors?.OldPass && (
                                         <label className="label p-0 pt-1">
                                             {errors.OldPass?.type === "required" && (
                                                 <span className="label-text-alt text-red-500">
@@ -320,8 +292,8 @@ const SignUp = () => {
                                                     {errors.OldPass.message}
                                                 </span>
                                             )}
-                                        </label>
-                                    )}
+                                        // </label>
+                                    )} */}
                                 </div>
                             </div>
 
@@ -346,7 +318,7 @@ const SignUp = () => {
                                         },
                                     })}
                                 />
-                                {errors?.address && (
+                                {/* {errors?.address && (
                                     <label className="label p-0 pt-1">
                                         {errors.address?.type === "required" && (
                                             <span className="label-text-alt text-red-500">
@@ -359,7 +331,7 @@ const SignUp = () => {
                                             </span>
                                         )}
                                     </label>
-                                )}
+                                )} */}
                             </div>
                             {error && (
                                 <p className="text-red-500 mb-2">
@@ -379,7 +351,6 @@ const SignUp = () => {
                             <div className="border hover:border-primary cursor-pointer hover:text-primary rounded-lg p-2">
                                 <p className="flex items-center gap-1">
                                     <AiOutlineCodeSandbox size={20} />{" "}
-                                    <span className="">Referral Code: {refer}</span>
                                 </p>
                             </div>
                         </div>
