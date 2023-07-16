@@ -1,12 +1,15 @@
 import BookCard from "@/components/BookCard";
+import AddNewBook from "@/components/modul/AddNewBook";
 import Footer from "@/layouts/Footer";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
 import { IBook } from "@/types/booksTypes";
 import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Home() {
   const { data, } = useGetBooksQuery(undefined);
+  const [addBook, setAddBook] = useState<any>(null)
   const books: IBook[] = data?.data;
   const usertoken = localStorage.getItem("accessToken");
   return (
@@ -37,7 +40,7 @@ export default function Home() {
         <div className="mt-5">
           {usertoken ?
             <div className="flex justify-end">
-              <label htmlFor="add-book" className="btn btn-wide bg-purple-500 hover:bg-purple-600 border-0 text-lg btn-circle text-white">Add New Book</label>
+              <label onClick={() => setAddBook("add book")} htmlFor="add-book" className="btn btn-wide bg-purple-500 hover:bg-purple-600 border-0 text-lg btn-circle text-white">Add New Book</label>
             </div>
             : <div className="flex justify-end">
               <Link to='signup' className="btn btn-wide btn-circle bg-purple-500 hover:bg-purple-600 border-0 text-lg text-white">Sign up Now</Link>
@@ -78,6 +81,7 @@ export default function Home() {
       <div className="pattern-bg">
         <Footer />
       </div>
+      {addBook && <AddNewBook setAddBook={setAddBook} />}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 
 
@@ -33,7 +34,7 @@ const BookCard = ({ book }: any) => {
                 <div className="flex justify-between items-center">
                     <p className="text-[16] font-bold">Public:</p>
                     <p className="text-[16]">
-                        {book?.publicationDate}
+                        {format(new Date(book?.publicationDate), "PP")}
                     </p>
                 </div>
 

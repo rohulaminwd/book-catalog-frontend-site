@@ -10,7 +10,7 @@ export interface IReview {
 
 export interface IBook {
   _id: string;
-  title?: string;
+  title: string;
   author: IUser;
   publicationDate: string;
   genre: string;

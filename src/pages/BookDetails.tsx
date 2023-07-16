@@ -7,7 +7,8 @@ import { useGetUsersQuery } from "@/redux/features/users/userApi";
 import { IBook } from "@/types/booksTypes";
 import { IUser } from "@/types/globalTypes";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 
 export default function BookDetails() {
@@ -52,7 +53,7 @@ export default function BookDetails() {
                         <div className="flex text-xl sm:text-2xl sm:mt-4 gap-x-3 items-center">
                             <p className=" font-bold">Publish:</p>
                             <p className="">
-                                {book?.publicationDate}
+                                {format(new Date(book?.publicationDate ? book?.publicationDate : ""), "PP")}
                             </p>
                         </div>
                         <div className="mt-4 rounded-md bg-purple-50 p-3">
@@ -74,7 +75,7 @@ export default function BookDetails() {
                             </div>}
                         </div>
                         <div className="mt-4 flex items-center gap-x-2 rounded-md bg-purple-50 p-3">
-                            <label onClick={() => setReview(book)} htmlFor="edit-book" className="btn btn-sm btn-primary capitalize text-md text-gray-200">Edit Book</label>
+                            <Link to={`/edit-book/${book?._id}`} onClick={() => setReview(book)} className="btn btn-sm btn-primary capitalize text-md text-gray-200">Edit Book</Link>
                             <label onClick={() => setDelete(book)} htmlFor="delete-book" className="btn btn-sm bg-purple-600 hover:bg-purple-700 capitalize text-md text-gray-200">Delete</label>
                         </div>
                     </div>

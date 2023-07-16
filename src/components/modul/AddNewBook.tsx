@@ -1,28 +1,16 @@
-import { useCreateBooksMutation, useGetBooksQuery, useUpdateBookMutation } from "@/redux/features/books/bookApi";
+import { useCreateBooksMutation } from "@/redux/features/books/bookApi";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BsFillImageFill } from "react-icons/bs";
 import { useGetMeQuery } from "@/redux/features/users/userApi";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { IBook } from "@/types/booksTypes";
 
-const EditBook = ({ setAddBook }: any) => {
-    const navigate = useNavigate();
+const AddNewBook = ({ setAddBook }: any) => {
     const [error, setError] = useState<string>();
     const [image, setImage] = useState<any>();
     const [img, setImg] = useState<any>();
     const imageRef = useRef<any>();
     const [loading, setLoading] = useState(false);
-    const { id } = useParams();
-    const { data: bookdata } = useGetBooksQuery(undefined);
-    const books: IBook[] = bookdata?.data;
-    const book = books?.find(book => book?._id === id)
-
-    const [title, setTitle] = useState<any>(book?.title);
-    const [genre, setGenre] = useState<any>(book?.genre);
-    const [date, setDate] = useState<any>(new Date(book?.publicationDate ? book?.publicationDate : new Date()).toISOString().split('T')[0]);
-
 
     const onImageChange = (event: any) => {
         if (event.target.files && event.target.files[0]) {
@@ -45,8 +33,8 @@ const EditBook = ({ setAddBook }: any) => {
     } = useForm();
 
 
-    const [updateBook,] =
-        useUpdateBookMutation();
+    const [addBook,] =
+        useCreateBooksMutation();
 
 
     const onSubmit: any = async (data: any) => {
@@ -67,27 +55,24 @@ const EditBook = ({ setAddBook }: any) => {
 
             if (result) {
                 const img = result.secure_url;
+
                 const book: any = {
-                    title: title,
-                    genre: genre,
-                    publicationDate: new Date(date),
+                    title: data.title,
+                    genre: data.genre,
+                    publicationDate: new Date(data?.pubDate),
+                    author: me?._id,
                     imageURL: img,
                 };
 
-                const options = {
-                    id: id,
-                    data: book,
-                };
-
-                console.log(options)
-
+                console.log(book);
 
                 try {
-                    const response: any = await updateBook(options);
+                    const response: any = await addBook({ data: book });
 
                     if (response?.data) {
-                        toast.success('Book update Successfully');
-                        navigate(`/book-details/${id}`)
+                        toast.success('Add New Book Success');
+                        reset();
+                        setAddBook(null);
                     } else if (response?.error) {
                         setError(response?.error?.data?.message);
                         toast.error(response?.error?.data?.message)
@@ -107,12 +92,15 @@ const EditBook = ({ setAddBook }: any) => {
         }
     };
 
+
+
     return (
-        <div className="bg-base-200">
-            <div className="mx-auto pt-10 px-2 sm:px-0 sm:pt-20  min-h-screen">
-                <div className="max-w-2xl my-auto p-4 mx-auto rounded-xl border shadow-xl pattern-bg">
+        <div>
+            <input type="checkbox" id="add-book" className="modal-toggle" />
+            <div className="modal modal-middle">
+                <div className="modal-box pattern-bg">
                     <h2 className="text-2xl mb-5 font-bold flex justify-center">
-                        Edit Book
+                        Add New Book
                     </h2>
 
                     <form onSubmit={handleSubmit(onSubmit)}>
@@ -122,17 +110,14 @@ const EditBook = ({ setAddBook }: any) => {
                                 {image && (
                                     <img
                                         src={image.image}
-                                        className="w-full max-h-[300px] rounded-xl"
+                                        className="w-full rounded-xl"
                                         alt="post img"
                                     />
                                 )}
                             </div>
                             {!image && <div className="content-center justify-center">
-                                <img
-                                    src={book?.imageURL}
-                                    className="w-full max-h-[300px] rounded-xl"
-                                    alt="post img"
-                                />
+                                <p className="flex text-gray-400 justify-center"><BsFillImageFill size={60} /></p>
+                                <p className="mt-3 font-bold text-gray-500">select book picture</p>
                             </div>}
                             <div style={{ display: "none" }} className="hidden">
                                 <input
@@ -155,10 +140,22 @@ const EditBook = ({ setAddBook }: any) => {
                                     type="text"
                                     placeholder="Enter book title"
                                     className="input input-bordered input-sm sm:input-md input-primary w-full"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    {...register("title", {
+                                        required: {
+                                            value: true,
+                                            message: "Title is required",
+                                        },
+                                    })}
                                 />
-
+                                {errors.title && (
+                                    <label className="label p-0 pt-1">
+                                        {typeof errors.title.message === 'string' && (
+                                            <span className="label-text-alt text-red-500">
+                                                {errors.title.message}
+                                            </span>
+                                        )}
+                                    </label>
+                                )}
                             </div>
                         </div>
                         <div className="flex w-full gap-x-3 justify-between">
@@ -172,10 +169,22 @@ const EditBook = ({ setAddBook }: any) => {
                                     type="text"
                                     placeholder="Enter Book genre"
                                     className="input input-bordered input-sm sm:input-md input-primary w-full"
-                                    value={genre}
-                                    onChange={(e) => setGenre(e.target.value)}
+                                    {...register("genre", {
+                                        required: {
+                                            value: true,
+                                            message: "Genre is required",
+                                        },
+                                    })}
                                 />
-
+                                {errors.genre && (
+                                    <label className="label p-0 pt-1">
+                                        {typeof errors.genre.message === 'string' && (
+                                            <span className="label-text-alt text-red-500">
+                                                {errors.genre.message}
+                                            </span>
+                                        )}
+                                    </label>
+                                )}
                             </div>
                             <div className="form-control w-full">
                                 <label className="label">
@@ -187,10 +196,22 @@ const EditBook = ({ setAddBook }: any) => {
                                     type="date"
                                     placeholder="Enter Your Email"
                                     className="input input-bordered input-sm sm:input-md input-primary w-full"
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
+                                    {...register("pubDate", {
+                                        required: {
+                                            value: true,
+                                            message: "Publish Date is required",
+                                        },
+                                    })}
                                 />
-
+                                {errors.pubDate && (
+                                    <label className="label p-0 pt-1">
+                                        {typeof errors.pubDate.message === 'string' && (
+                                            <span className="label-text-alt text-red-500">
+                                                {errors.pubDate.message}
+                                            </span>
+                                        )}
+                                    </label>
+                                )}
                             </div>
                         </div>
 
@@ -205,11 +226,11 @@ const EditBook = ({ setAddBook }: any) => {
                             <input
                                 className="btn btn-sm w-[120px] text-white uppercase font-bold bg-gradient-to-r from-[#2091d9] to-[#13b38f] hover:from-[#13b38f] hover:to-[#2091d9] duration-300 border-0"
                                 type="submit"
-                                value="Edit Book"
+                                value="Add Book"
                             />
-                            <Link to={`/book-details/${id}`} className="btn text-white bg-[#4f4e4e] btn-sm w-[120px] ">
+                            <label htmlFor="add-book" className="btn text-white bg-[#4f4e4e] btn-sm w-[120px] ">
                                 cancel
-                            </Link>
+                            </label>
                         </div>
                     </form>
                 </div>
@@ -218,4 +239,4 @@ const EditBook = ({ setAddBook }: any) => {
     );
 };
 
-export default EditBook;
+export default AddNewBook;
