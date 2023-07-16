@@ -45,7 +45,7 @@ const EditBook = ({ setAddBook }: any) => {
     } = useForm();
 
 
-    const [updateBook,] =
+    const [updateBookById,] =
         useUpdateBookMutation();
 
 
@@ -67,7 +67,7 @@ const EditBook = ({ setAddBook }: any) => {
 
             if (result) {
                 const img = result.secure_url;
-                const book: any = {
+                const editebook: any = {
                     title: title,
                     genre: genre,
                     publicationDate: new Date(date),
@@ -76,14 +76,14 @@ const EditBook = ({ setAddBook }: any) => {
 
                 const options = {
                     id: id,
-                    data: book,
+                    data: editebook,
                 };
 
                 console.log(options)
 
 
                 try {
-                    const response: any = await updateBook(options);
+                    const response: any = await updateBookById(options);
 
                     if (response?.data) {
                         toast.success('Book update Successfully');
