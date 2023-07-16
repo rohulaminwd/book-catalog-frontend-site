@@ -1,6 +1,7 @@
 
 import ReviewCard from "@/components/ReviewCard";
 import AddReview from "@/components/modul/AddReview";
+import DeleteModule from "@/components/modul/DeleteBook";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
 import { useGetUsersQuery } from "@/redux/features/users/userApi";
 import { IBook } from "@/types/booksTypes";
@@ -11,7 +12,9 @@ import { useParams } from "react-router-dom";
 
 export default function BookDetails() {
     const { id } = useParams();
-    const [review, setReview] = useState<any>(null)
+    const token = localStorage.getItem("accessToken");
+    const [deleteBook, setDelete] = useState<any>(null)
+    const [review, setReview] = useState<any>(null);
     const { data: users, } = useGetUsersQuery(undefined);
     const userdata = users?.data;
     const { data, isLoading, error } = useGetBooksQuery(undefined);
@@ -27,11 +30,11 @@ export default function BookDetails() {
 
     return (
         <div className="max-w-7xl px-3 min-h-screen flex items-center mx-auto">
-            <div className="sm:flex w-full mt-8 justify-between items-center gap-x-5">
-                <div className="w-full flex items-center sm:border-r-2 border-purple-300 justify-center">
+            <div className="md:flex w-full mt-8 justify-between items-center gap-x-5">
+                <div className="w-full flex items-center justify-center">
                     <img src={book?.imageURL} className="rounded-xl mx-auto max-w-[600px] max-h-[600px]" alt="book" />
                 </div>
-                <div className="w-full">
+                <div className="w-full md:pl-4  sm:border-l-2 border-purple-300">
                     <div className="my-2 mt-4">
                         <div className="flex justify-between">
                             <p className="text-3xl sm:text-5xl mt-3 font-bold text-purple-700">{book?.title}</p>
@@ -52,25 +55,33 @@ export default function BookDetails() {
                                 {book?.publicationDate}
                             </p>
                         </div>
-                        <div className="mt-4 rounded-md bg-white p-3">
-                            <p className="text-xl sm:text-2xl font-bold">Reviews</p>
+                        <div className="mt-4 rounded-md bg-purple-50 p-3">
+                            <p className="text-xl sm:text-2xl font-bold text-purple-700">Reviews</p>
                             <div className="my-2">
                                 {
-                                    book?.review?.map((review: any) => (
-                                        <div key={review?._id} className="my-1">
-                                            <ReviewCard key={review?._id} review={[review, handleUser(review?.userId)]} />
-                                        </div>
-                                    ))
+                                    book?.review
+                                        ?.map((review, index) => (
+                                            <div key={review?._id} className="my-1">
+                                                <ReviewCard key={review?._id} review={[review, handleUser(review?.userId)]} />
+                                            </div>
+                                        ))
+                                        .reverse()
+                                        .slice(0, 4)
                                 }
                             </div>
-                            <div className="flex mt-4 justify-end">
-                                <label onClick={() => setReview(book)} htmlFor="review" className="btn btn-xs capitalize text-gray-700">Add Review</label>
-                            </div>
+                            {token && <div className="flex mt-4 justify-end">
+                                <label onClick={() => setReview(book)} htmlFor="review" className="btn btn-sm bg-purple-600 hover:bg-purple-700 capitalize text-gray-200">Add Review</label>
+                            </div>}
+                        </div>
+                        <div className="mt-4 flex items-center gap-x-2 rounded-md bg-purple-50 p-3">
+                            <label onClick={() => setReview(book)} htmlFor="edit-book" className="btn btn-sm btn-primary capitalize text-md text-gray-200">Edit Book</label>
+                            <label onClick={() => setDelete(book)} htmlFor="delete-book" className="btn btn-sm bg-purple-600 hover:bg-purple-700 capitalize text-md text-gray-200">Delete</label>
                         </div>
                     </div>
                 </div>
             </div>
             {review && <AddReview review={review} setReview={setReview} />}
+            {deleteBook && <DeleteModule deleteBook={deleteBook} setDelete={setDelete} />}
         </div >
     )
 }

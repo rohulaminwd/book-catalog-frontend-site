@@ -5,15 +5,15 @@ const ReviewCard = ({ review }: any) => {
     const [revie, me] = review
     console.log(me)
     return (
-        <div className="flex gap-x-1 items-start">
+        <div className="flex gap-x-2 chat chat-start py-1.5 w-full items-start">
             <div className="flex mt-1 items-center gap-x-1.5">
                 <UserProfileImg
                     me={me}
-                    textColor="sm:text-[8px] ring-offset-[1px] text-[8px] text-white"
-                    className="w-4 h-4 -ml-[1px] bg-secondary ring-[1px] ring-[#91f2dc]"
+                    textColor="ring-offset-[1px] text-[12px] text-white"
+                    className="w-7 h-7 -ml-[1px] bg-purple-700 ring-[1px] ring-[#c591f2]"
                 />
             </div>
-            <div className="flex w-full justify-between items-center border-l-top-0 border rounded-xl p-1">
+            <div className="flex !w-full -mt-2 py-0 chat-bubble bg-purple-100 text-purple-600 justify-between items-center border-l-top-0 border rounded-xl p-1">
                 <div className="ml-1">
                     {/* <p className="text-sm">{me?.name?.firstName}</p> */}
                     <div>

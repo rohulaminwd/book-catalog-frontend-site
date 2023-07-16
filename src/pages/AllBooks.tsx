@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from "framer-motion";
 export default function AllBooks() {
     const { data, isLoading, error } = useGetBooksQuery(undefined);
     const books: IBook[] = data?.data;
-    console.log(data, "books")
+
     return (
         <div className="max-w-7xl mx-auto">
             <div>

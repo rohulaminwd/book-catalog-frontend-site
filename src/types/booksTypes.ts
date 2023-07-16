@@ -1,6 +1,8 @@
+import { Key } from 'react';
 import { IUser } from './globalTypes';
 
 export interface IReview {
+  _id: Key | null | undefined;
   userId: string;
   review: string;
   rating: string[];
