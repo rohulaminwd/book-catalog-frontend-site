@@ -1,5 +1,5 @@
 import { useForm, useWatch } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import signInBg from "../assets/images/signIn-bg.jpg";
 import {
     AiFillApple,

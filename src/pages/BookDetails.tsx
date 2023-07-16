@@ -61,7 +61,7 @@ export default function BookDetails() {
                             <div className="my-2">
                                 {
                                     book?.review
-                                        ?.map((review, index) => (
+                                        ?.map((review) => (
                                             <div key={review?._id} className="my-1">
                                                 <ReviewCard key={review?._id} review={[review, handleUser(review?.userId)]} />
                                             </div>
