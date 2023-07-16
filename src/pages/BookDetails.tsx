@@ -18,7 +18,7 @@ export default function BookDetails() {
     const [review, setReview] = useState<any>(null);
     const { data: users, } = useGetUsersQuery(undefined);
     const userdata = users?.data;
-    const { data, isLoading, error } = useGetBooksQuery(undefined);
+    const { data, } = useGetBooksQuery(undefined);
     const books: IBook[] = data?.data;
     const book = books?.find(book => book?._id === id)
 

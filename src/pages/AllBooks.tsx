@@ -4,7 +4,7 @@ import { IBook } from "@/types/booksTypes";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function AllBooks() {
-    const { data, isLoading, error } = useGetBooksQuery(undefined);
+    const { data, } = useGetBooksQuery(undefined);
     const books: IBook[] = data?.data;
 
     return (

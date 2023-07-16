@@ -1,4 +1,4 @@
-import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import signInBg from "../assets/images/signIn-bg.jpg";
 import {
@@ -11,15 +11,13 @@ import {
     FaFacebookF
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
-// import { toast } from "react-toastify";
 import { BiHide, BiShow } from "react-icons/bi";
-import { ILogin, IUser, IUserFrom } from "@/types/globalTypes";
+import { ILogin, IUserFrom } from "@/types/globalTypes";
 import { GiBookAura } from "react-icons/gi";
 import { useLoginMutation } from "@/redux/features/users/userApi";
 import { toast } from "react-toastify";
 
 export default function Login() {
-    const search = useLocation().search;
     const [error, setError] = useState<string>();
     const {
         register,
@@ -29,6 +27,7 @@ export default function Login() {
         control,
     } = useForm();
     const [loading, setLoading] = useState(false);
+    console.log(loading)
     const newPass = useWatch({ control, name: "NewPass" });
     const oldPass = useWatch({ control, name: "OldPass" });
     const navigate = useNavigate();

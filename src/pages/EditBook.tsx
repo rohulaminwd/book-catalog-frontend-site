@@ -1,19 +1,19 @@
-import { useCreateBooksMutation, useGetBooksQuery, useUpdateBookMutation } from "@/redux/features/books/bookApi";
+import { useGetBooksQuery, useUpdateBookMutation } from "@/redux/features/books/bookApi";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { BsFillImageFill } from "react-icons/bs";
-import { useGetMeQuery } from "@/redux/features/users/userApi";
+
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IBook } from "@/types/booksTypes";
 
-const EditBook = ({ setAddBook }: any) => {
+const EditBook = () => {
     const navigate = useNavigate();
     const [error, setError] = useState<string>();
     const [image, setImage] = useState<any>();
     const [img, setImg] = useState<any>();
     const imageRef = useRef<any>();
     const [loading, setLoading] = useState(false);
+    console.log(loading)
     const { id } = useParams();
     const { data: bookdata } = useGetBooksQuery(undefined);
     const books: IBook[] = bookdata?.data;
@@ -34,14 +34,8 @@ const EditBook = ({ setAddBook }: any) => {
         }
     };
 
-    const { data, } = useGetMeQuery(undefined);
-    const me = data?.data;
     const {
-        register,
-        formState: { errors },
         handleSubmit,
-        reset,
-        control,
     } = useForm();
 
 
@@ -49,7 +43,7 @@ const EditBook = ({ setAddBook }: any) => {
         useUpdateBookMutation();
 
 
-    const onSubmit: any = async (data: any) => {
+    const onSubmit: any = async () => {
         setLoading(true);
         const formData = new FormData();
         formData.append("file", img);

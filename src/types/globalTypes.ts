@@ -1,4 +1,4 @@
-import { FieldValues, SubmitHandler } from 'react-hook-form';
+import { FieldValues } from 'react-hook-form';
 
 export type UserName = {
   firstName: string;

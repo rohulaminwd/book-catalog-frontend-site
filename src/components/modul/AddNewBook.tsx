@@ -11,6 +11,7 @@ const AddNewBook = ({ setAddBook }: any) => {
     const [img, setImg] = useState<any>();
     const imageRef = useRef<any>();
     const [loading, setLoading] = useState(false);
+    console.log(loading)
 
     const onImageChange = (event: any) => {
         if (event.target.files && event.target.files[0]) {
@@ -29,7 +30,6 @@ const AddNewBook = ({ setAddBook }: any) => {
         formState: { errors },
         handleSubmit,
         reset,
-        control,
     } = useForm();
 
 

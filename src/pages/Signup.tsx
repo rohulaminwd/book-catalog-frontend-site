@@ -1,25 +1,22 @@
 
 
-import { FieldValues, SubmitHandler, useForm, useWatch } from "react-hook-form";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useForm, useWatch } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import signInBg from "../assets/images/signIn-bg.jpg";
 import {
     AiOutlineArrowLeft,
     AiOutlineArrowRight,
-    AiOutlineCodeSandbox,
 } from "react-icons/ai";
 import {
     GiBookAura
 } from "react-icons/gi";
 import { useEffect, useState } from "react";
-// import { toast } from "react-toastify";
 import { BiHide, BiShow } from "react-icons/bi";
-import { IResponseData, IUser, IUserFrom } from "@/types/globalTypes";
+import { IUser, IUserFrom } from "@/types/globalTypes";
 import { useCreateUserMutation } from "@/redux/features/users/userApi";
 import { toast } from "react-toastify";
 
 const SignUp = () => {
-    const search = useLocation().search;
     const [error, setError] = useState<string>();
 
     const {
@@ -30,6 +27,7 @@ const SignUp = () => {
         reset,
     } = useForm();
     const [loading, setLoading] = useState(false);
+    console.log(loading)
     const newPass = useWatch({ control, name: "NewPass" });
     const oldPass = useWatch({ control, name: "OldPass" });
     const navigate = useNavigate();

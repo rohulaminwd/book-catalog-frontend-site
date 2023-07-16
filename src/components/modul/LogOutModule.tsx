@@ -1,8 +1,7 @@
 
-import { useNavigate } from "react-router-dom";
+
 
 const LogOutModule = ({ setLogout }: any) => {
-    const navigate = useNavigate();
     const logOut = () => {
         setLogout(null);
         localStorage.removeItem("accessToken");
