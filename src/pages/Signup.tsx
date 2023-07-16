@@ -82,9 +82,9 @@ const SignUp = () => {
             console.log(response, isSuccess, isError, isLoading)
 
             if (response?.data) {
-                navigate("/login");
                 toast.success('SignUp success. Please login now.');
                 reset();
+                navigate("/login");
             } else if (response?.error) {
                 setError(response?.error?.data?.message);
             }

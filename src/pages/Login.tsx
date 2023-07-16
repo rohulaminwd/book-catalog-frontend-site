@@ -77,11 +77,11 @@ export default function Login() {
             console.log(response, isSuccess, isError, isLoading)
 
             if (response?.data) {
-                navigate("/");
                 const accessToken = response?.data?.data?.accessToken;
                 localStorage.setItem("accessToken", accessToken);
                 toast.success('login success');
                 reset();
+                navigate("/");
             } else if (response?.error) {
                 setError(response?.error?.data?.message);
             }
@@ -247,7 +247,7 @@ export default function Login() {
                                 className="btn w-full text-white uppercase font-bold bg-gradient-to-r from-[#2091d9] to-[#13b38f] hover:from-[#13b38f] hover:to-[#2091d9] duration-300 border-0"
                                 type="submit"
                                 disabled={disabled}
-                                value="Create Account"
+                                value="Login"
                             />
                         </form>
 
