@@ -1,7 +1,7 @@
-import React from 'react';
+
 import { ProgressBar } from 'react-loader-spinner';
 
-const ProgressSpeener = ({ loading }) => {
+const ProgressSpeener = ({ loading }: any) => {
   return (
     <div>
       {loading && (

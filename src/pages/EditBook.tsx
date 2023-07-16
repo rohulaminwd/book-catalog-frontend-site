@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { IBook } from "@/types/booksTypes";
+import ProgressSpeener from "@/components/ProgressSpeener";
+import Loading from "@/components/Loading";
 
 const EditBook = () => {
     const navigate = useNavigate();
@@ -13,9 +15,8 @@ const EditBook = () => {
     const [img, setImg] = useState<any>();
     const imageRef = useRef<any>();
     const [loading, setLoading] = useState(false);
-    console.log(loading)
     const { id } = useParams();
-    const { data: bookdata } = useGetBooksQuery(undefined);
+    const { data: bookdata, isLoading } = useGetBooksQuery(undefined);
     const books: IBook[] = bookdata?.data;
     const book = books?.find(book => book?._id === id)
 
@@ -39,8 +40,12 @@ const EditBook = () => {
     } = useForm();
 
 
-    const [updateBookById,] =
+    const [updateBookById, isLoading1] =
         useUpdateBookMutation();
+
+    if (isLoading || isLoading1) {
+        return <Loading />
+    }
 
 
     const onSubmit: any = async () => {
@@ -188,7 +193,9 @@ const EditBook = () => {
                             </div>
                         </div>
 
-
+                        {
+                            loading && <ProgressSpeener loading={loading} />
+                        }
                         {error && (
                             <p className="text-red-500 text-center mt-3 mb-0">
                                 <small>{error}</small>

@@ -11,6 +11,7 @@ import {
 import { useGetMeQuery } from "@/redux/features/users/userApi";
 import { FaBookReader } from "react-icons/fa";
 import LogOutModule from "@/components/modul/LogOutModule";
+import Loading from "@/components/Loading";
 
 const Navbar = () => {
     const usertoken = localStorage.getItem("accessToken");
@@ -36,6 +37,10 @@ const Navbar = () => {
 
     if (window.scrollY > 200) {
         console.log("scroll");
+    }
+
+    if (isLoading) {
+        return <Loading />
     }
 
     const menuItems = (

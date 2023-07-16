@@ -9,6 +9,7 @@ import { IUser } from "@/types/globalTypes";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { format } from "date-fns";
+import Loading from "@/components/Loading";
 
 
 export default function BookDetails() {
@@ -18,7 +19,7 @@ export default function BookDetails() {
     const [review, setReview] = useState<any>(null);
     const { data: users, } = useGetUsersQuery(undefined);
     const userdata = users?.data;
-    const { data, } = useGetBooksQuery(undefined);
+    const { data, isLoading } = useGetBooksQuery(undefined);
     const books: IBook[] = data?.data;
     const book = books?.find(book => book?._id === id)
 
@@ -26,6 +27,10 @@ export default function BookDetails() {
         const user: IUser = userdata?.find((user: IUser) => user?.email === email);
         console.log(userdata, email, "oll ok")
         return user;
+    }
+
+    if (isLoading) {
+        return <Loading />
     }
 
 

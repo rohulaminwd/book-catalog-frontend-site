@@ -15,6 +15,7 @@ import { BiHide, BiShow } from "react-icons/bi";
 import { IUser, IUserFrom } from "@/types/globalTypes";
 import { useCreateUserMutation } from "@/redux/features/users/userApi";
 import { toast } from "react-toastify";
+import ProgressSpeener from "@/components/ProgressSpeener";
 
 const SignUp = () => {
     const [error, setError] = useState<string>();
@@ -337,6 +338,9 @@ const SignUp = () => {
                                     </label>
                                 )}
                             </div>
+                            {
+                                loading && <ProgressSpeener loading={loading} />
+                            }
                             {error && (
                                 <p className="text-red-500 mb-2">
                                     <small>{error}</small>

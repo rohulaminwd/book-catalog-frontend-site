@@ -1,11 +1,16 @@
 import BookCard from "@/components/BookCard";
+import Loading from "@/components/Loading";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
 import { IBook } from "@/types/booksTypes";
 import { AnimatePresence, motion } from "framer-motion";
 
 export default function AllBooks() {
-    const { data, } = useGetBooksQuery(undefined);
+    const { data, isLoading } = useGetBooksQuery(undefined);
     const books: IBook[] = data?.data;
+
+    if (isLoading) {
+        return <Loading />
+    }
 
     return (
         <div className="max-w-7xl mx-auto">

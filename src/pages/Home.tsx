@@ -1,4 +1,5 @@
 import BookCard from "@/components/BookCard";
+import Loading from "@/components/Loading";
 import AddNewBook from "@/components/modul/AddNewBook";
 import Footer from "@/layouts/Footer";
 import { useGetBooksQuery } from "@/redux/features/books/bookApi";
@@ -8,10 +9,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Home() {
-  const { data, } = useGetBooksQuery(undefined);
+  const { data, isLoading } = useGetBooksQuery(undefined);
   const [addBook, setAddBook] = useState<any>(null)
   const books: IBook[] = data?.data;
   const usertoken = localStorage.getItem("accessToken");
+
+
+  console.log(isLoading, "ok done hoy naki")
+
+  if (isLoading) {
+    return <Loading />
+  }
+
+
   return (
     <div className="">
       <div className="p-4 mt-4 foot-reem rounded-xl max-w-7xl mx-auto pattern-bg">

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { BsFillImageFill } from "react-icons/bs";
 import { useGetMeQuery } from "@/redux/features/users/userApi";
+import ProgressSpeener from "../ProgressSpeener";
 
 const AddNewBook = ({ setAddBook }: any) => {
     const [error, setError] = useState<string>();
@@ -11,7 +12,6 @@ const AddNewBook = ({ setAddBook }: any) => {
     const [img, setImg] = useState<any>();
     const imageRef = useRef<any>();
     const [loading, setLoading] = useState(false);
-    console.log(loading)
 
     const onImageChange = (event: any) => {
         if (event.target.files && event.target.files[0]) {
@@ -215,6 +215,9 @@ const AddNewBook = ({ setAddBook }: any) => {
                             </div>
                         </div>
 
+                        {
+                            loading && <ProgressSpeener loading={loading} />
+                        }
 
                         {error && (
                             <p className="text-red-500 text-center mt-3 mb-0">

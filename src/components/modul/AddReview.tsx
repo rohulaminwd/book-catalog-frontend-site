@@ -1,15 +1,18 @@
 import { usePostReviewMutation } from "@/redux/features/books/bookApi";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import ProgressSpeener from "../ProgressSpeener";
 
 
 const AddReview = ({ review, setReview }: any) => {
     const [rating, setRating] = useState([1, 2, 3, 4, 5])
     const [value, setValue] = useState('Wow..! Nice book')
+    const [loading, setLoading] = useState(false);
 
     const [addReview,] =
         usePostReviewMutation();
     const handleReview = async () => {
+        setLoading(true)
         const data = {
             rating: rating,
             review: value,
@@ -29,12 +32,14 @@ const AddReview = ({ review, setReview }: any) => {
             if (response?.data) {
                 toast.success('Success add review');
                 setReview(null)
+                setLoading(false)
             } else if (response?.error) {
                 toast.error('Opps no..! fail review');
+                setLoading(false)
             }
         } catch (error) {
             toast.error('Opps no..! fail review');
-            console.error(error);
+            setLoading(false)
         }
     }
     return (
@@ -57,6 +62,9 @@ const AddReview = ({ review, setReview }: any) => {
                             </div>
                         </div>
                     </div>
+                    {
+                        loading && <ProgressSpeener loading={loading} />
+                    }
                     <div className="flex items-center justify-center gap-3 mt-5">
                         <button
                             onClick={() => handleReview()}

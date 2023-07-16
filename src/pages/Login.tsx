@@ -16,6 +16,7 @@ import { ILogin, IUserFrom } from "@/types/globalTypes";
 import { GiBookAura } from "react-icons/gi";
 import { useLoginMutation } from "@/redux/features/users/userApi";
 import { toast } from "react-toastify";
+import ProgressSpeener from "@/components/ProgressSpeener";
 
 export default function Login() {
     const [error, setError] = useState<string>();
@@ -236,7 +237,9 @@ export default function Login() {
                                     )}
                                 </div>
                             </div>
-
+                            {
+                                loading && <ProgressSpeener loading={loading} />
+                            }
 
                             {error && (
                                 <p className="text-red-500 mb-2">
