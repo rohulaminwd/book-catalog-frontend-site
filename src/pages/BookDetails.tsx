@@ -74,6 +74,8 @@ export default function BookDetails() {
                                         .reverse()
                                         .slice(0, 4)
                                 }
+                                {book?.review?.length && book.review.length > 0 ? null : <p>No review yet</p>}
+
                             </div>
                             {token && <div className="flex mt-4 justify-end">
                                 <label onClick={() => setReview(book)} htmlFor="review" className="btn btn-sm bg-purple-600 hover:bg-purple-700 capitalize text-gray-200">Add Review</label>

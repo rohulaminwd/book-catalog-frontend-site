@@ -39,16 +39,12 @@ const Navbar = () => {
         console.log("scroll");
     }
 
-    if (isLoading) {
-        return <Loading />
-    }
-
     const menuItems = (
         <>
             <li className="mx-1">
                 <Link
                     to="/"
-                    className={`${pathname === '/' ? "!text-primary !bg-teal-50 border-b border-primary" : "px-1 rounded-none mx-1 sm:mx-3"}`}
+                    className={`${pathname === '/' ? "!text-primary !bg-transparent hover:!bg-transparent border-b border-primary" : "px-1 rounded-none mx-1 sm:mx-3"}`}
                 >
                     <span className="ml-1 sm:text-[18px] text-sm">
                         Home
@@ -58,7 +54,7 @@ const Navbar = () => {
             <li className="mx-1">
                 <Link
                     to="/all-books"
-                    className={`${pathname === '/all-books' ? "!text-primary border-b border-primary" : "px-1 rounded-none mx-1 sm:mx-3"}`}
+                    className={`${pathname === '/all-books' ? "!bg-transparent hover:!bg-transparent rounded-0 border-b border-primary" : "px-1 rounded-none mx-1 sm:mx-3"}`}
                 >
                     <span className="ml-1 sm:text-[18px] text-sm">
                         All Books

@@ -43,7 +43,7 @@ const EditBook = () => {
     const [updateBookById, isLoading1] =
         useUpdateBookMutation();
 
-    if (isLoading || isLoading1) {
+    if (isLoading) {
         return <Loading />
     }
 

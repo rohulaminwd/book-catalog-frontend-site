@@ -56,11 +56,11 @@
 
 .pat-bg{ 
   background: 
-      radial-gradient(farthest-side at -33.33% 50%,#0000 52%,#e6fafb 54% 57%,#0000 59%) 0 calc(96px/2),
-      radial-gradient(farthest-side at 50% 133.33%,#0000 52%,#e6fafb 54% 57%,#0000 59%) calc(96px/2) 0,
-      radial-gradient(farthest-side at 133.33% 50%,#0000 52%,#e6fafb 54% 57%,#0000 59%),
-      radial-gradient(farthest-side at 50% -33.33%,#0000 52%,#e6fafb 54% 57%,#0000 59%),
-      #fcffff;
+      radial-gradient(farthest-side at -33.33% 50%,#0000 52%,#f3e6fb 54% 57%,#0000 59%) 0 calc(96px/2),
+      radial-gradient(farthest-side at 50% 133.33%,#0000 52%,#f3e6fb 54% 57%,#0000 59%) calc(96px/2) 0,
+      radial-gradient(farthest-side at 133.33% 50%,#0000 52%,#f3e6fb 54% 57%,#0000 59%),
+      radial-gradient(farthest-side at 50% -33.33%,#0000 52%,#f3e6fb 54% 57%,#0000 59%),
+      #e1d6f0;
 background-size: calc(96px/4.667) 96px,96px calc(96px/4.667);
 
 }

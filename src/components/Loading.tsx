@@ -1,5 +1,5 @@
 
-import { FidgetSpinner, Dna } from 'react-loader-spinner'
+import { FidgetSpinner } from 'react-loader-spinner'
 
 const Loading = () => {
   return (
@@ -15,14 +15,6 @@ const Loading = () => {
           ballColors={['#ff0000', '#00ff00', '#0000ff']}
           backgroundColor="#F4442E"
         />
-        {/* <Dna
-          visible={true}
-          height="200"
-          width="200"
-          ariaLabel="dna-loading"
-          wrapperStyle={{}}
-          wrapperClass="dna-wrapper"
-        /> */}
       </div>
     </div>
   );
