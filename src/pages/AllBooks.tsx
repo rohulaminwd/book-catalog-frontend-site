@@ -105,7 +105,7 @@ export default function AllBooks() {
                     className="md:mt-5 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-3"
                 >
                     <AnimatePresence>
-                        {books?.map((i) => (
+                        {searchResults?.map((i: any) => (
                             <>
                                 <motion.div
                                     layout
